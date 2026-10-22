@@ -104,4 +104,4 @@ Script `db/engpro.sql` tạo các bảng chính gồm: users, categories, course
 
 ## Tác giả
 
-kanrezza – Đồ án cơ sở
+Trần Đình Danh
