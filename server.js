@@ -17,16 +17,23 @@ const PORT = process.env.PORT || 8080;
 // ─────────────────────────────────────────────────────────────
 //  Database pool
 // ─────────────────────────────────────────────────────────────
-const pool = mysql.createPool({
-  host:              process.env.MYSQLHOST     || '127.0.0.1',
-  port:              process.env.MYSQLPORT     || 3306,
-  user:              process.env.MYSQLUSER     || 'root',
-  password:          process.env.MYSQLPASSWORD || '',
-  database:          process.env.MYSQLDATABASE || 'engpro',
-  charset:           'utf8mb4',
+const dbConfig = {
+  user: process.env.MYSQLUSER || 'root',
+  password: process.env.MYSQLPASSWORD || '',
+  database: process.env.MYSQLDATABASE || 'engpro',
+  charset: 'utf8mb4',
   waitForConnections: true,
-  connectionLimit:   10,
-});
+  connectionLimit: 10,
+};
+
+if (process.env.MYSQL_SOCKET) {
+  dbConfig.socketPath = process.env.MYSQL_SOCKET;
+} else {
+  dbConfig.host = process.env.MYSQLHOST || '127.0.0.1';
+  dbConfig.port = process.env.MYSQLPORT || 3306;
+}
+
+const pool = mysql.createPool(dbConfig);
 
 // ─────────────────────────────────────────────────────────────
 //  Middleware
